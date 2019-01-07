@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+<meta charset="UTF-8" />
+<title>고객 목록</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/dashboard.css" th:href="@{/css/dashboard.css}" />
+</head>
+<body>
+	<div layout:fragment="content" class="container">
+		<h1>모두 모여라 팔로우 하자</h1>
+		<p>
+			<span sec:authentication="principal.user.username">duke</span>님이 로그인
+			상태 <a th:href="@{/logout}" class="btn btn-default btn-xs">로그 아옷</a>
+		</p>
+		<div class="col-sm-12">
+			<table class="table table-striped table-bordered table-condensed">
+				<tr>					
+					<th>유저아이디</th>
+					<th colspan="2">상태</th>
+				</tr>
+				<tr th:each="user : ${users}">					
+					<td th:text="${user.username}">user1</td>		
+					<!-- <td th:text="${user.follows.id}">100</td> -->		
+					<td>
+						<form th:action="@{/follows/create}" method="post">
+							<span th:if="${#lists.size(user.follows) == 0}">
+								<input class="btn btn-default" type="submit" value="팔로우" />
+								<input type="hidden" name="followed_id" th:value="${user.username}" />
+							</span>
+						</form>
+						
+<!-- 						<span th:each="f : ${user.follows}">
+						<span th:text="${f.followed_id}"></span>
+						</span> 
+-->
+						
+						<form th:action="@{/follows/delete}" method="post">
+							<span th:if="${#lists.size(user.follows)} > 0">
+								<input class="btn btn-danger" type="submit" value="팔로잉" />
+							</span>
+							<input type="hidden" name="userFormName" th:value="${user.username}" />
+						</form>
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

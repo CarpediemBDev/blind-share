@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>글쓰기 목록</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/dashboard.css" th:href="@{/css/dashboard.css}" />
+</head>
+<body>
+	<div layout:fragment="content" class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<td>번호</td>
+					<td>제목</td>
+					<td>내용</td>
+					<td>작성자</td>
+					<td>작성일</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="post : ${posts}">
+					<td th:text="${post.id}">7</td>
+					<td th:text="${post.title}">부트스트랩을 하는이유</td>
+					<td th:text="${post.context}">디자이너 없이 개발자로만 개발가능</td>
+					<td th:text="${post.username}">최훈정</td>
+					<td th:text="${post.upd_date}">2012-02-01</td>
+					<td>
+						<form th:action="@{/posts/edit}" method="get">
+							<input class="btn btn-default" type="submit" name="form" value="편집" />
+							 <input type="hidden" name="id" th:value="${post.id}" />
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/posts/delete}" method="post">
+							<input class="btn btn-danger" type="submit" value="삭제" />
+							<input type="hidden" name="id" th:value="${post.id}" />
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<form th:action="@{/posts/create}" method="get">
+			<input type="submit" class="btn btn-default pull-right" name="form" value="글쓰기" />
+		</form>
+		<!-- pagination 기능 추가 (페이징처리) -->
+		<div class="text-center">
+			<ul class="pagination">
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</body>
+</html>

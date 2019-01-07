@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>글쓰기 목록</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/dashboard.css" th:href="@{/css/dashboard.css}" />
+</head>
+<body>
+	<div layout:fragment="content" class="container">
+		<form th:action="@{${page}}" method="post">
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<th>작성자</th>
+						<td><input th:field="*{user.username}" th:disabled="${user.username}" value="임영광" class="form-control"></td>
+					</tr>	
+					<tr>
+						<th>제목</th>
+						<td><input th:field="*{post.title}" class="form-control"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea rows="10" th:field="*{post.context}" class="form-control"></textarea></td>		
+					</tr>
+				</tbody>
+			</table>
+			<div class="form-group">
+				<div class="pull-right">
+					<button type="submit" class="btn btn-primary">작성</button>
+					<input type="hidden" name="id" th:field="*{post.id}" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</body>
+</html>
